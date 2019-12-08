@@ -40,38 +40,29 @@ public class AppointmentsMapTest {
         assertThat(list.get(UUID.fromString("48cadf26-975e-11e5-b9c2-c8e0eb18c1e9")).size()).isEqualTo(39);
         assertThat(list.get(UUID.fromString("48644c7a-975e-11e5-a090-c8e0eb18c1e9")).size()).isEqualTo(47);
         assertThat(list.get(UUID.fromString("452dccfc-975e-11e5-bfa5-c8e0eb18c1e9")).size()).isEqualTo(56);
-        for (final Map.Entry<UUID, HashMap<UUID, Appointment>> entry : list.entrySet()) {
-            System.out.println("Appointment id" + entry.getKey());
-            System.out.println(entry.getValue().size());
-            System.out.println("-----------");
-
-        }
     }
 
     @Test
     public void testLoadTimeslots() throws Exception {
-        final HashMap<UUID, TimeSlots> list = appointmentsMap.getAllTimeslots();
-        assertThat(list.size()).isEqualTo(493);
-        for (final Map.Entry<UUID, TimeSlots> entry : list.entrySet()) {
-            System.out.println(entry);
+        final HashMap<UUID, HashMap<UUID, TimeSlots>> list = appointmentsMap.getAllTimeslots();
+        int elementCounter = 0;
+        for (final Map.Entry<UUID, HashMap<UUID, TimeSlots>> mapEntry : list.entrySet()) {
+            for (final Map.Entry<UUID, TimeSlots> ignored : mapEntry.getValue().entrySet()) {
+                elementCounter++;
+            }
         }
+        assertThat(elementCounter).isEqualTo(493);
     }
 
     @Test
     public void testTimeslottypes() throws Exception {
         final HashMap<UUID, Timeslottypes> list = appointmentsMap.getAllTimeslottypes();
         assertThat(list.size()).isEqualTo(4);
-        for (final Map.Entry<UUID, Timeslottypes> entry : list.entrySet()) {
-            System.out.println(entry);
-        }
     }
 
     @Test
     public void testPatients() throws Exception {
         final HashMap<UUID, Patient> list = appointmentsMap.getAllPatients();
         assertThat(list.size()).isEqualTo(21);
-        for (final Map.Entry<UUID, Patient> entry : list.entrySet()) {
-            System.out.println(entry);
-        }
     }
 }

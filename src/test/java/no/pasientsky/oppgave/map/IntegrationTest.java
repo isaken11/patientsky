@@ -1,20 +1,15 @@
 package no.pasientsky.oppgave.map;
 
-import java.net.URI;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -52,15 +47,15 @@ public class IntegrationTest {
         requestDto.setEndPeriodToSearch(endPeriodToSearch);
 
         final ResponseEntity<ResponseDto> response = restTemplate.postForEntity(
-                        "http://localhost:9080/schedule/availabletime/v1",
-                        requestDto,
-                        ResponseDto.class
-                );
+                "http://localhost:9080/schedule/availabletime/v1",
+                requestDto,
+                ResponseDto.class
+        );
         assertThat(response.getStatusCodeValue()).isEqualTo(200);
 
         final ResponseDto responseDto = response.getBody();
         assertThat(responseDto).isNotNull();
         assertThat(responseDto.getAvailableTimes()).isNotNull();
-        assertThat(responseDto.getAvailableTimes().size()).isEqualTo(12);
+        assertThat(responseDto.getAvailableTimes().size()).isEqualTo(83);
     }
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.UUID;
 
 public class RequestDto {
+
     private List<UUID> calendarIds;
     private Integer duration;
     private LocalDateTime startPeriodToSearch;

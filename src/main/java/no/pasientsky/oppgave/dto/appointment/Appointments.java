@@ -3,6 +3,7 @@ package no.pasientsky.oppgave.dto.appointment;
 import java.util.List;
 
 public class Appointments {
+
     private List<Appointment> appointments;
     private List<TimeSlots> timeslots;
     private List<Timeslottypes> timeslottypes;

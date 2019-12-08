@@ -1,6 +1,7 @@
 package no.pasientsky.oppgave.map;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -21,7 +22,7 @@ public class AppointmentsMap {
 
     private final HashMap<UUID, Appointment> appointmentMap; // <AppointmentId, Appointment>
     private final HashMap<UUID, HashMap<UUID, Appointment>> calendarMap; // <CalendarId, <AppointmentId, Appointment>>
-    private final HashMap<UUID, TimeSlots> timeslotMap; // <TimeSlotsId, TimeSlots>
+    private final HashMap<UUID, HashMap<UUID, TimeSlots>> timeslotMap; // <CalendarId, <TimeSlotsId, <TimeSlots>>
     private final HashMap<UUID, Timeslottypes> timeslottypesMap; // <TimeSlotsId, TimeSlots>
     private final HashMap<UUID, Patient> patientMap;
     private final ObjectMapper objectMapper;
@@ -49,18 +50,17 @@ public class AppointmentsMap {
         return calendarMap;
     }
 
-    public HashMap<UUID, Appointment> getCalendarsByUUIDS(final List<UUID> uuids) {
-        final HashMap<UUID, Appointment> selectionMap = new HashMap<>();
+    public List<TimeSlots> getTimeslotByCalendarUuid(final List<UUID> uuids) {
+        final List<TimeSlots> timeSlotsList = new ArrayList<>();
         for (final UUID uuid : uuids) {
-            final HashMap<UUID, Appointment> foundCalendars = getAllCalendars().get(uuid);
-            if (null != foundCalendars){
-                selectionMap.putAll(foundCalendars);
+            if (getAllTimeslots().containsKey(uuid)) {
+                timeSlotsList.addAll(getAllTimeslots().get(uuid).values());
             }
         }
-        return selectionMap;
+        return timeSlotsList;
     }
 
-    public HashMap<UUID, TimeSlots> getAllTimeslots() {
+    public HashMap<UUID, HashMap<UUID, TimeSlots>> getAllTimeslots() {
         if (timeslotMap.isEmpty()) {
             loadMap();
         }
@@ -125,7 +125,15 @@ public class AppointmentsMap {
 
     private void loadTimeslots(final Appointments appointments) {
         for (final TimeSlots timeSlots : appointments.getTimeslots()) {
-            timeslotMap.put(timeSlots.getId(), timeSlots);
+            if (!timeslotMap.containsKey(timeSlots.getCalendar_id())) {
+                final HashMap<UUID, TimeSlots> subMap = new HashMap<>();
+                subMap.put(timeSlots.getId(), timeSlots);
+                timeslotMap.put(timeSlots.getCalendar_id(), subMap);
+            } else {
+                final HashMap<UUID, TimeSlots> subMap = timeslotMap.get(timeSlots.getCalendar_id());
+                subMap.put(timeSlots.getId(), timeSlots);
+                timeslotMap.put(timeSlots.getCalendar_id(), subMap);
+            }
         }
     }
 

@@ -5,6 +5,7 @@ import java.util.List;
 import no.pasientsky.oppgave.dto.appointment.AvailableTime;
 
 public class ResponseDto {
+
     private List<AvailableTime> availableTimes;
 
     public ResponseDto() {

@@ -35,11 +35,11 @@ public class ScheduleServiceTest {
         calendars.add(UUID.fromString("452dccfc-975e-11e5-bfa5-c8e0eb18c1e"));
         calendars.add(UUID.fromString("48644c7a-975e-11e5-a090-c8e0eb18c1e9"));
         final Integer duration = 30;
-        final LocalDateTime startPeriodToSearch = LocalDateTime.parse("2019-04-24T19:30:00");
-        final LocalDateTime endPeriodToSearch = LocalDateTime.parse("2019-04-27T19:30:00");
+        final LocalDateTime startPeriodToSearch = LocalDateTime.parse("2019-04-23T08:00:00");
+        final LocalDateTime endPeriodToSearch = LocalDateTime.parse("2019-04-27T21:45:00");
 
         final List<AvailableTime> availableTime = scheduleService.findAvailableTime(calendars, duration, startPeriodToSearch, endPeriodToSearch);
-        assertThat(availableTime.size()).isEqualTo(12);
+        assertThat(availableTime.size()).isEqualTo(142);
 
         System.out.println("Try booking time between " + startPeriodToSearch + " to " + endPeriodToSearch + " with duration " + duration + " minutes");
         System.out.println("Found: " + availableTime.size());

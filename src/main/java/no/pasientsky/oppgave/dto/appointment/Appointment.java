@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 public class Appointment {
+
     private UUID id;
     private UUID patient_id;
     private UUID calendar_id;

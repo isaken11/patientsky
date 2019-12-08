@@ -31,7 +31,7 @@ public class PatientMetaDeserializer extends JsonDeserializer<PatientMeta> {
         final Iterator<Map.Entry<String, JsonNode>> elements = jsonNode.fields();
         final HashMap<UUID, Patient> patientMap = new HashMap<>();
 
-        while(elements.hasNext()){
+        while (elements.hasNext()) {
             final Map.Entry<String, JsonNode> entry = elements.next();
             final Patient patient = objectMapper.convertValue(entry.getValue(), Patient.class);
             patientMap.put(UUID.fromString(entry.getKey()), patient);

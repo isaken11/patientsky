@@ -3,6 +3,7 @@ package no.pasientsky.oppgave.dto.appointment;
 import java.util.UUID;
 
 public class Timeslottypes {
+
     private UUID id;
     private String name;
     private Integer slot_size;
